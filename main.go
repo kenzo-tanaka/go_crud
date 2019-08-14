@@ -22,6 +22,16 @@ func dbInit() {
 	db.AutoMigrate(&Book{})
 }
 
+func dbInsert(title string, description string) {
+    db, err := gorm.Open("sqlite3", "book.sqlite3")
+    if err != nil {
+        panic("You can't open db! (insert)")
+    }
+
+    defer db.Close()
+    db.Create(&Book{Title: title, Description: description})
+}
+
 func dbGetAll() []Book {
 	db, err := gorm.Open("sqlite3", "book.sqlite3")
 	if err != nil {
@@ -46,7 +56,15 @@ func main() {
 			// "book": []Book{{"Sample book", "Lorem ipsum dolor..."}, {"Sample book2", "Lorem ipsum ..."}},
 			"books": books,
 		})
-	})
+    })
+    
+    // 追加
+    router.POST("/new", func(c *gin.Context) {
+        title := c.PostForm("title")
+        description := c.PostForm("description")
+        dbInsert(title,description)
+        c.Redirect(302, "/")
+    })
 
 	router.Run()
 }
