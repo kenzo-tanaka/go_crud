@@ -6,9 +6,15 @@
   </head>
   <body>
     <h1>Hello {{.data}}!!!</h1>
-    {{ range.book }}
-    {{.Title}}
-    {{.Description}}
-    {{ end }}
+    <div>
+      {{ range.book }}
+      <ul>
+        <li>
+          <b>{{.Title}}</b>
+          ：{{.Description}}
+        </li>
+      </ul>
+      {{ end }}
+    </div>
   </body>
 </html>
