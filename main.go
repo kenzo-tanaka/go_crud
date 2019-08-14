@@ -39,7 +39,7 @@ func dbGetAll() []Book {
 	}
 	defer db.Close()
 	var books []Book
-	db.Order("created_at desc").Find(&books)
+	db.Find(&books)
 	return books
 }
 
@@ -53,7 +53,7 @@ func main() {
 		books := dbGetAll()
 		ctx.HTML(200, "index.html", gin.H{
 			// "data": data,
-			// "book": []Book{{"Sample book", "Lorem ipsum dolor..."}, {"Sample book2", "Lorem ipsum ..."}},
+			// "books": []Book{{"Sample book", "Lorem ipsum dolor..."}, {"Sample book2", "Lorem ipsum ..."}},
 			"books": books,
 		})
     })
