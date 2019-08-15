@@ -43,6 +43,18 @@ func dbGetAll() []Book {
 	return books
 }
 
+func dbDelete(id int) {
+	db, err := gorm.Open("sqlite3", "book.sqlite3")
+	if err != nil {
+		panic("You can't open DB (dbDelete)")
+	}
+
+	defer db.Close()
+	var book Book
+	db.First(&book,id)
+	db.Delete(&book)
+}
+
 func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*.html")
